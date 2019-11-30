@@ -1,5 +1,7 @@
 package org.codingmatters.ui.cli.choices;
 
+import org.codingmatters.ui.cli.choices.screen.Screen;
+
 import java.util.Optional;
 
 public interface ChoiceContext<V> {
@@ -17,6 +19,9 @@ public interface ChoiceContext<V> {
     void alert(AlertType type, CommandExecutionFailure commandExecutionFailure);
 
     void info(String message);
+
+    void screen(Screen screen);
+    Screen.Builder currentScreen();
 
     default void run(Choice<V> start) {
         ChoiceMaker<V> choiceMaker = new ChoiceMaker<V>() {};

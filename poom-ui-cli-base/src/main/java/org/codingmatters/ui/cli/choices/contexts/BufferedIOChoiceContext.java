@@ -2,6 +2,7 @@ package org.codingmatters.ui.cli.choices.contexts;
 
 import org.codingmatters.ui.cli.choices.ChoiceContext;
 import org.codingmatters.ui.cli.choices.CommandExecutionFailure;
+import org.codingmatters.ui.cli.choices.screen.Screen;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +12,8 @@ import java.util.Optional;
 public class BufferedIOChoiceContext implements ChoiceContext<String> {
 
     private final BufferedReader reader;
+    private Screen screen;
+    private int screenWidth = 100;
 
     public BufferedIOChoiceContext(BufferedReader reader) {
         this.reader = reader;
@@ -60,5 +63,16 @@ public class BufferedIOChoiceContext implements ChoiceContext<String> {
     @Override
     public void info(String message) {
         System.out.println(message);
+    }
+
+    @Override
+    public void screen(Screen screen) {
+        this.screen = screen;
+        System.out.println(new ScreenTextFormatter(this.screenWidth).format(screen));
+    }
+
+    @Override
+    public Screen.Builder currentScreen() {
+        return this.screen == null ? Screen.builder() : Screen.from(this.screen);
     }
 }

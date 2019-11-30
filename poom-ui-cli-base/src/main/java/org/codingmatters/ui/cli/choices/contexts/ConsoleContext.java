@@ -2,12 +2,15 @@ package org.codingmatters.ui.cli.choices.contexts;
 
 import org.codingmatters.ui.cli.choices.ChoiceContext;
 import org.codingmatters.ui.cli.choices.CommandExecutionFailure;
+import org.codingmatters.ui.cli.choices.screen.Screen;
 
 import java.io.Console;
 import java.util.Optional;
 
 public class ConsoleContext implements ChoiceContext<String> {
     private final Console console;
+    private Screen screen;
+    private int screenWidth = 100;
 
     public ConsoleContext() {
         this.console = System.console();
@@ -63,5 +66,16 @@ public class ConsoleContext implements ChoiceContext<String> {
     @Override
     public void info(String message) {
         this.console.printf(message + "\n");
+    }
+
+    @Override
+    public void screen(Screen screen) {
+        this.screen = screen;
+        this.console.printf("%s", new ScreenTextFormatter(this.screenWidth).format(screen));
+    }
+
+    @Override
+    public Screen.Builder currentScreen() {
+        return this.screen == null ? Screen.builder() : Screen.from(this.screen);
     }
 }
