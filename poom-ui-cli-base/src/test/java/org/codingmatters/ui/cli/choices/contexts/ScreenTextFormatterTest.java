@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 
 public class ScreenTextFormatterTest {
     @Test
-    public void given__whenHeaderAndFooter__then() throws Exception {
+    public void givenWith100_andHeight0__whenHeaderAndFooter__then() throws Exception {
         assertThat(
-                new ScreenTextFormatter(100).format(Screen.builder()
+                new ScreenTextFormatter(100, 0).format(Screen.builder()
                         .header("This is my header.")
                         .main("Main content.\nMultiple lines.\nVery nice.")
                         .footer("The footer.")
@@ -30,9 +30,9 @@ public class ScreenTextFormatterTest {
     }
 
     @Test
-    public void given__whenNoHeader__then() throws Exception {
+    public void givenWith100_andHeight0_whenNoHeader__then() throws Exception {
         assertThat(
-                new ScreenTextFormatter(100).format(Screen.builder()
+                new ScreenTextFormatter(100, 0).format(Screen.builder()
                         .header(null)
                         .main("Main content.\nMultiple lines.\nVery nice.")
                         .footer("The footer.")
@@ -49,9 +49,9 @@ public class ScreenTextFormatterTest {
     }
 
     @Test
-    public void given__whenNoFooter__then() throws Exception {
+    public void givenWith100_andHeight0_whenNoFooter__then() throws Exception {
         assertThat(
-                new ScreenTextFormatter(100).format(Screen.builder()
+                new ScreenTextFormatter(100, 0).format(Screen.builder()
                         .header("This is my header.")
                         .main("Main content.\nMultiple lines.\nVery nice.")
                         .footer(null)
@@ -68,9 +68,9 @@ public class ScreenTextFormatterTest {
     }
 
     @Test
-    public void given__whenNoMainNoHeaderNoFooter__then() throws Exception {
+    public void givenWith100_andHeight0_whenNoMainNoHeaderNoFooter__then() throws Exception {
         assertThat(
-                new ScreenTextFormatter(100).format(Screen.builder()
+                new ScreenTextFormatter(100, 0).format(Screen.builder()
                         .header(null)
                         .main(null)
                         .footer(null)
@@ -85,16 +85,16 @@ public class ScreenTextFormatterTest {
 
 
     @Test
-    public void given__whenHeaderLongerThanLine__then() throws Exception {
+    public void givenWith100_andHeight0_whenHeaderLongerThanLine__then() throws Exception {
         assertThat(
-                new ScreenTextFormatter(100).format(Screen.builder()
+                new ScreenTextFormatter(100, 0).format(Screen.builder()
                         .header("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
                         .main(null)
                         .footer(null)
                         .build()),
                 is(
                         "----------------------------------------------------------------------------------------------------\n" +
-                                "-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" +
+                                "-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.-\n" +
                                 "----------------------------------------------------------------------------------------------------\n" +
                                 "\n" +
                                 "\n" +
@@ -103,9 +103,9 @@ public class ScreenTextFormatterTest {
     }
 
     @Test
-    public void given__whenFooterLongerThanLine__then() throws Exception {
+    public void givenWith100_andHeight0_whenFooterLongerThanLine__then() throws Exception {
         assertThat(
-                new ScreenTextFormatter(100).format(Screen.builder()
+                new ScreenTextFormatter(100, 0).format(Screen.builder()
                         .header(null)
                         .main(null)
                         .footer("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
@@ -115,7 +115,31 @@ public class ScreenTextFormatterTest {
                                 "\n" +
                                 "\n" +
                                 "----------------------------------------------------------------------------------------------------\n" +
-                                "-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" +
+                                "-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.-\n" +
+                                "----------------------------------------------------------------------------------------------------"
+                ));
+    }
+
+
+    @Test
+    public void givenWith100_andHeight5_whenNoMainNoHeaderNoFooter__then() throws Exception {
+        assertThat(
+                new ScreenTextFormatter(100, 10).format(Screen.builder()
+                        .header(null)
+                        .main(null)
+                        .footer(null)
+                        .build()),
+                is(
+
+                        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                        "----------------------------------------------------------------------------------------------------\n" +
+                                "\n" +
+                                "\n" +
+                                "\n" +
+                                "\n" +
+                                "\n" +
+                                "\n" +
+                                "\n" +
                                 "----------------------------------------------------------------------------------------------------"
                 ));
     }
